@@ -163,7 +163,7 @@ var el = document.querySelector('#saveMemberInfo');
 if (el) {
     el.addEventListener('submit', saveMemberInfo);
 }
-function saveMemberInfo(event) {
+async function saveMemberInfo(event) {
   event.preventDefault();
   const keys = ['Lisence_no', 'owner_name', 'nameOfCar', 'd_o_a', 'slot']
   console.log("Adding car to the blockchain")
