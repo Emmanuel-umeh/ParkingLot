@@ -1,3 +1,135 @@
+const contractSource = `
+payable contract ParkingLot =   
+    type i = int
+    type s = string
+    type a = address
+    type b = bool
+
+    record car = {
+        id : i,
+        owner : a,
+        nameOfCar	  : s,
+        nameOfOwner : s,
+        lisencePlate	  : s,
+        entryDate : i,
+        exitDate : i,
+        checkedOut : b
+         }
+   
+    record state = 
+        { cars : map(i, car),
+        totalCars : i}
+ 
+    entrypoint init() = {
+        cars = {},
+        totalCars = 0 }
+
+    entrypoint getCar(index : i) : car = 
+        switch(Map.lookup(index, state.cars))
+            None  => abort("There is no Cars with that ID.")
+            Some(x) => x  
+
+    stateful entrypoint addCar(nameOfCar' : s,nameOfOwner' : s, lisencePlate' : s) = 
+       
+        let index = getTotalCars() + 1
+        let car = {id= index,  
+            owner  = Call.caller,
+            nameOfCar = nameOfCar',
+            nameOfOwner = nameOfOwner',
+            lisencePlate =  lisencePlate',
+            entryDate = Chain.timestamp,
+            exitDate = 0,
+            checkedOut = false   }
+        put(state {cars[index] = car, totalCars = index})
+
+    stateful payable entrypoint checkOut(index : i) = 
+        let carToCheckOut = getCar(index)
+        require(carToCheckOut.checkedOut != true, "This car has already been checkout out")
+        Chain.spend(Contract.address, 100000)
+        
+        let updateDate = state.cars[index].entryDate
+        put(state{cars[index].exitDate = updateDate + Chain.block_height, cars[index].checkedOut = true   })
+
+    entrypoint getTotalCars() : i = 
+        state.totalCars
+
+        
+
+
+`;
+const contractAddress ='ct_294UySW9KtaKAZvZHMVC4NYVAfqQWZK4uihvEC9FtxjcR4hGff';
+var client = null;
+var CarArray = [];
+
+
+
+async function callStatic(func, args) {
+  //Create a new contract instance that we can interact with
+  const contract = await client.getContractInstance(contractSource, {
+    contractAddress
+  });
+
+  const calledGet = await contract
+    .call(func, args, {
+      callStatic: true
+    })
+    .catch(e => console.error(e));
+
+  const decodedGet = await calledGet.decode().catch(e => console.error(e));
+  console.log("number of posts : ", decodedGet);
+  return decodedGet;
+}
+
+async function contractCall(func, args, value) {
+  const contract = await client.getContractInstance(contractSource, {
+    contractAddress
+  });
+  //Make a call to write smart contract func, with aeon value input
+  const calledSet = await contract
+    .call(func, args, {
+      amount: value
+    })
+    .catch(e => console.error(e));
+
+  return calledSet;
+}
+
+
+window.addEventListener('load', async () => {
+  //   $("#loader").show();
+  
+    client = await Ae.Aepp();
+  
+    totalCar =  await callStatic('getTotalCars', [])
+    console.log(totalCar)
+  
+    for (let i = 1; i <= totalCar; i++) {
+  
+     
+      const car = await callStatic('getCar', [i])
+      console.log(car)
+      console.log("This is the cars exit date : ", car.exitDate)
+  
+      CarArray.push({
+        id     : car.id,
+        owner           : car.owner,
+        nameOfCar          : car.nameOfCar,
+        nameOfOwner          : car.nameOfOwner,
+        lisencePlate            : car.lisencePlate,
+        entryDate: Date(car.entryDate),
+        exitDate : 0
+      })
+
+      // renderCars();
+    }
+  
+    
+    
+  
+  //   $("#loader").hide();
+  });
+  console.log("Finished")
+
 /**
  * Initiate the app at the beginning
  */
@@ -25,13 +157,19 @@ function guid() {
 /**
  * Create and Store New Member
  */
+
+
 var el = document.querySelector('#saveMemberInfo');
 if (el) {
     el.addEventListener('submit', saveMemberInfo);
 }
 function saveMemberInfo(event) {
   event.preventDefault();
-  const keys = ['reg_no', 'owner_name', 'email', 'd_o_a', 'slot']
+  const keys = ['Lisence_no', 'owner_name', 'nameOfCar', 'd_o_a', 'slot']
+  console.log("Adding car to the blockchain")
+
+  console.log(keys[1])
+  await contractCall("addCar", [keys[2],keys[1],keys[0]], 0)
   const obj = {}
   keys.forEach((item, index) => {
     const result = document.getElementById(item).value
@@ -91,14 +229,14 @@ function getTableData() {
   const searchKeyword = $('#member_search').val()
   const members = getMembers()
   const filteredMembers = members.filter(({
-      reg_no,
+    Lisence_no,
       owner_name,
-      email,
+      nameOfCar,
       d_o_a,
       slot
-    }, index) => reg_no.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+    }, index) => Lisence_no.toLowerCase().includes(searchKeyword.toLowerCase()) ||
     owner_name.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-    email.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+    nameOfCar.toLowerCase().includes(searchKeyword.toLowerCase()) ||
     d_o_a.toLowerCase().includes(searchKeyword.toLowerCase()) ||
     slot.toLowerCase().includes(searchKeyword.toLowerCase()))
   if (!filteredMembers.length) {
@@ -122,14 +260,14 @@ function insertIntoTableView(item, tableIndex) {
   const idCell = row.insertCell(0)
   const firstNameCell = row.insertCell(1)
   const lastNameCell = row.insertCell(2)
-  const emailCell = row.insertCell(3)
+  const nameOfCarCell = row.insertCell(3)
   const dateOfBirthCell = row.insertCell(4)
   const slotCell = row.insertCell(5)
   const actionCell = row.insertCell(6)
   idCell.innerHTML = tableIndex
-  firstNameCell.innerHTML = item.reg_no
+  firstNameCell.innerHTML = item.Lisence_no
   lastNameCell.innerHTML = item.owner_name
-  emailCell.innerHTML = item.email
+  nameOfCarCell.innerHTML = item.nameOfCar
   dateOfBirthCell.innerHTML = item.d_o_a
   slotCell.innerHTML = `<span class="tag">${item.slot}</span>`
   const guid = item.id
@@ -150,9 +288,9 @@ function getTotalRowOfTable() {
 function showMemberData(id) {
   const allMembers = getMembers()
   const member = allMembers.find(item => item.id == id)
-  $('#show_reg_no').val(member.reg_no)
+  $('#show_reg_no').val(member.Lisence_no)
   $('#show_owner_name').val(member.owner_name)
-  $('#show_email').val(member.email)
+  $('#show_email').val(member.nameOfCar)
   $('#show_d_o_a').val(member.d_o_a)
   $('#show_slot').val(member.slot)
   $('#showModal').modal()
@@ -165,9 +303,9 @@ function showMemberData(id) {
 function showEditModal(id) {
   const allMembers = getMembers()
   const member = allMembers.find(item => item.id == id)
-  $('#edit_reg_no').val(member.reg_no)
+  $('#edit_reg_no').val(member.Lisence_no)
   $('#edit_owner_name').val(member.owner_name)
-  $('#edit_email').val(member.email)
+  $('#edit_email').val(member.nameOfCar)
   $('#edit_d_o_a').val(member.d_o_a)
   $('#edit_slot').val(member.slot)
   $('#member_id').val(id)
@@ -199,9 +337,9 @@ function updateMemberData() {
   const member = allMembers.find(({
     id
   }) => id == memberId)
-  member.reg_no = $('#edit_reg_no').val()
+  member.Lisence_no = $('#edit_reg_no').val()
   member.owner_name = $('#edit_owner_name').val()
-  member.email = $('#edit_email').val()
+  member.nameOfCar = $('#edit_email').val()
   member.d_o_a = $('#edit_d_o_a').val()
   member.slot = $('#edit_slot').val()
   const data = JSON.stringify(allMembers)
@@ -235,7 +373,7 @@ function deleteMemberData() {
   getTableData()
 }
 /**
- * Sorting table data through type, e.g: reg_no, email, owner_name etc.
+ * Sorting table data through type, e.g: Lisence_no, nameOfCar, owner_name etc.
  *
  * @param {string} type
  */
