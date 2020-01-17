@@ -164,11 +164,12 @@ if (el) {
     el.addEventListener('submit', saveMemberInfo);
 }
 async function saveMemberInfo(event) {
-  event.preventDefault();
-  const keys = ['Lisence_no', 'owner_name', 'nameOfCar', 'd_o_a', 'slot']
   console.log("Adding car to the blockchain")
 
   console.log(keys[1])
+  event.preventDefault();
+  const keys = ['Lisence_no', 'owner_name', 'nameOfCar', 'd_o_a', 'slot']
+  
   await contractCall("addCar", [keys[2],keys[1],keys[0]], 0)
   const obj = {}
   keys.forEach((item, index) => {
