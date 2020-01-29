@@ -1,0 +1,86 @@
+payable contract ParkingLot =   
+    type i = int
+    type s = string
+    type a = address
+    type b = bool
+
+    record car = {
+        id : i,
+        owner : a,
+        nameOfCar	  : s,
+        nameOfOwner : s,
+        lisencePlate	  : s,
+        entryDate : i,
+        exitDate : i,
+        checkedOut : b
+         }
+
+    record owner = {
+        owner : a,
+        nameOfOwner : s
+        }
+   
+    record state = 
+        { cars : map(i, car),
+        checkedInOwners : map(address, owner)}
+ 
+    entrypoint init() = {
+        cars = {},
+        checkedInOwners = {}}
+
+    entrypoint getCar(index : i) : car = 
+        switch(Map.lookup(index, state.cars))
+            None  => abort("There is no Cars with that ID.")
+            Some(x) => x  
+
+    stateful entrypoint addCar(nameOfCar' : s,nameOfOwner' : s, lisencePlate' : s) = 
+
+        // Ensures the user has not already registered a car
+        require(!Map.member(Call.caller, state.checkedInOwners), "You are already checked in")
+        let index = getTotalCars() + 1
+        let car = {id= index,  
+            owner  = Call.caller,
+            nameOfCar = nameOfCar',
+            nameOfOwner = nameOfOwner',
+            lisencePlate =  lisencePlate',
+            entryDate = Chain.timestamp,
+            exitDate = 0,
+            checkedOut = false   }
+
+        let checkedInOwner = {
+            owner = Call.caller,
+            nameOfOwner = nameOfOwner'
+
+            }
+        put(state {cars[index] = car})
+        put(state {checkedInOwners[Call.caller] = checkedInOwner})
+
+    private stateful function deleteUser() =
+          put(state{ checkedInOwners @ c = Map.delete(Call.caller, c) })
+
+    private stateful function updateCheckOutState(index : i) = 
+
+        let user  = getCar(index)
+
+        let updated = !user.checkedOut
+        put(state{cars[index].checkedOut = updated })
+
+
+    stateful payable entrypoint checkOut(index : i) = 
+        let carToCheckOut = getCar(index)
+        require(carToCheckOut.checkedOut != true, "This car has already been checkout out")
+        Chain.spend(Contract.address, 100000)
+
+        updateCheckOutState(index)
+        // Removes the user from the record
+        deleteUser()
+        
+        
+        let updateDate = state.cars[index].entryDate
+        
+        put(state{cars[index].exitDate = updateDate + Chain.block_height  })
+
+    entrypoint getTotalCars() : i = 
+        Map.size(state.cars)
+
+        

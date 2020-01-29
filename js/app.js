@@ -15,14 +15,19 @@ payable contract ParkingLot =
         exitDate : i,
         checkedOut : b
          }
+
+    record owner = {
+        owner : a,
+        nameOfOwner : s
+        }
    
     record state = 
         { cars : map(i, car),
-        totalCars : i}
+        checkedInOwners : map(address, owner)}
  
     entrypoint init() = {
         cars = {},
-        totalCars = 0 }
+        checkedInOwners = {}}
 
     entrypoint getCar(index : i) : car = 
         switch(Map.lookup(index, state.cars))
@@ -30,7 +35,9 @@ payable contract ParkingLot =
             Some(x) => x  
 
     stateful entrypoint addCar(nameOfCar' : s,nameOfOwner' : s, lisencePlate' : s) = 
-       
+
+        // Ensures the user has not already registered a car
+        require(!Map.member(Call.caller, state.checkedInOwners), "You are already checked in")
         let index = getTotalCars() + 1
         let car = {id= index,  
             owner  = Call.caller,
@@ -40,19 +47,46 @@ payable contract ParkingLot =
             entryDate = Chain.timestamp,
             exitDate = 0,
             checkedOut = false   }
-        put(state {cars[index] = car, totalCars = index})
+
+        let checkedInOwner = {
+            owner = Call.caller,
+            nameOfOwner = nameOfOwner'
+
+            }
+        put(state {cars[index] = car})
+        put(state {checkedInOwners[Call.caller] = checkedInOwner})
+
+    private stateful function deleteUser() =
+          put(state{ checkedInOwners @ c = Map.delete(Call.caller, c) })
+
+    private stateful function updateCheckOutState(index : i) = 
+
+        let user  = getCar(index)
+
+        let updated = !user.checkedOut
+        put(state{cars[index].checkedOut = updated })
+
 
     stateful payable entrypoint checkOut(index : i) = 
         let carToCheckOut = getCar(index)
         require(carToCheckOut.checkedOut != true, "This car has already been checkout out")
         Chain.spend(Contract.address, 100000)
+
+        updateCheckOutState(index)
+        // Removes the user from the record
+        deleteUser()
+        
         
         let updateDate = state.cars[index].entryDate
-        put(state{cars[index].exitDate = updateDate + Chain.block_height, cars[index].checkedOut = true   })
+        
+        put(state{cars[index].exitDate = updateDate + Chain.block_height  })
 
     entrypoint getTotalCars() : i = 
-        state.totalCars
+        Map.size(state.cars)
 
+        
+
+        
         
 
 
