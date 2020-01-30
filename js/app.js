@@ -209,7 +209,14 @@ $('.modal-body').on('click', '#checkInBtn', async function () {
   const promise = await contractCall("addCar", [nameOfCar, owner_name, image, Lisence_no], 0)
   console.log(promise)
  .then(
+   
     async function(){
+
+      if(promise == undefined){
+        console.log("reverting request")
+        $(".loading").hide();
+
+      }else{
     const carId = await callStatic('getTotalCars', [])
 
     const newCar = await callStatic('getCar', [carId])
@@ -230,6 +237,7 @@ $('.modal-body').on('click', '#checkInBtn', async function () {
     renderCars()
   
     $(".loading").hide();
+  }
   }).catch(err => console.log(err) );
 })
   
