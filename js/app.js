@@ -230,7 +230,7 @@ $('.modal-body').on('click', '#checkInBtn', async function () {
     renderCars()
   
     $(".loading").hide();
-  })
+  }).catch(err => console.log(err) );
 })
   
   
