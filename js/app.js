@@ -10,6 +10,7 @@ payable contract ParkingLot =
         owner : a,
         nameOfCar	  : s,
         nameOfOwner : s,
+        image : s,
         lisencePlate	  : s,
         entryDate : i,
         exitDate : i,
@@ -34,7 +35,7 @@ payable contract ParkingLot =
             None  => abort("There is no Cars with that ID.")
             Some(x) => x  
 
-    stateful entrypoint addCar(nameOfCar' : s,nameOfOwner' : s, lisencePlate' : s) = 
+    stateful entrypoint addCar(nameOfCar' : s,nameOfOwner' : s, image' :s, lisencePlate' : s) = 
 
         // Ensures the user has not already registered a car
         require(!Map.member(Call.caller, state.checkedInOwners), "You are already checked in")
@@ -43,6 +44,7 @@ payable contract ParkingLot =
             owner  = Call.caller,
             nameOfCar = nameOfCar',
             nameOfOwner = nameOfOwner',
+            image = image',
             lisencePlate =  lisencePlate',
             entryDate = Chain.timestamp,
             exitDate = 0,
@@ -83,6 +85,8 @@ payable contract ParkingLot =
 
     entrypoint getTotalCars() : i = 
         Map.size(state.cars)
+
+        
 
         
 
