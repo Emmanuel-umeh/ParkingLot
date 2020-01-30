@@ -206,69 +206,75 @@ $('.modal-body').on('click', '#checkInBtn', async function () {
  
   console.log(image)
 
-  await contractCall("addCar", [nameOfCar, owner_name, image, Lisence_no], 0)
+  promise = await contractCall("addCar", [nameOfCar, owner_name, image, Lisence_no], 0)
+  console.log(promise)
+  promise.then(
+    async function(){
+    const carId = await callStatic('getTotalCars', [])
 
-  const carId = await callStatic('getTotalCars', [])
-
-  const newCar = await callStatic('getCar', [carId])
-  CarArray.push({
-    id     : newCar.id,
-    owner           : newCar.owner,
-    nameOfCar          : newCar.nameOfCar,
-    image :newCar.image,
-    nameOfOwner          : newCar.nameOfOwner,
-    lisencePlate            : newCar.lisencePlate,
-    entryDate: Date(newCar.entryDate),
-    exitDate : 0,
-    checkedOut : newCar.checkedOut
+    const newCar = await callStatic('getCar', [carId])
+    CarArray.push({
+      id     : newCar.id,
+      owner           : newCar.owner,
+      nameOfCar          : newCar.nameOfCar,
+      image :newCar.image,
+      nameOfOwner          : newCar.nameOfOwner,
+      lisencePlate            : newCar.lisencePlate,
+      entryDate: Date(newCar.entryDate),
+      exitDate : 0,
+      checkedOut : newCar.checkedOut
+    })
+  
+    console.log("added")
+  
+    renderCars()
+  
+    $(".loading").hide();
   })
-
-  console.log("added")
-
-  renderCars()
-
-  $(".loading").hide();
 })
-
-
-$('#cars').on('click', '.checkOutBtn', async function (event) {
-  $(".loading").show();
-  console.log("Checking out")
- 
   
- 
-  // const Lisence_no = $('#Lisence_no').val()
   
-  // owner_name = ($('#owner_name').val());
-  // nameOfCar = ($('#nameOfCar').val());
+  $('#cars').on('click', '.checkOutBtn', async function (event) {
+    $(".loading").show();
+    console.log("Checking out")
+   
+    
+   
+    // const Lisence_no = $('#Lisence_no').val()
+    
+    // owner_name = ($('#owner_name').val());
+    // nameOfCar = ($('#nameOfCar').val());
+  
+    // image = ($('#image').val())
+  
+    // console.log(image)
+  
+    index = event.target.id
+    console.log("index", index)
+  
+    // const foundIndex = CarArray.findIndex(car => car.index == event.target.id);
+    // console.log("Found index", Math.abs(foundIndex))
+    // CarArray[Math.abs(foundIndex)].checkedOut = true;
+  
+  
+    console.log(index)
+    await contractCall("checkOut", [index], 100000)
+  
+    // const checkedOut = await callStatic('getCar', [index])
+  
+    // const checkOutDate = checkedOut.exitDate
+    // console.log("Check out date ",checkOutDate )
+  
+    // CarArray[Math.abs(foundIndex)].exitDate = Date();
+  
+    // console.log(checkedOut)
+  
+    location.reload()
+    console.log("checked out")
+  
+    renderCars()
+   
+ 
 
-  // image = ($('#image').val())
-
-  // console.log(image)
-
-  index = event.target.id
-  console.log("index", index)
-
-  // const foundIndex = CarArray.findIndex(car => car.index == event.target.id);
-  // console.log("Found index", Math.abs(foundIndex))
-  // CarArray[Math.abs(foundIndex)].checkedOut = true;
-
-
-  console.log(index)
-  await contractCall("checkOut", [index], 100000)
-
-  // const checkedOut = await callStatic('getCar', [index])
-
-  // const checkOutDate = checkedOut.exitDate
-  // console.log("Check out date ",checkOutDate )
-
-  // CarArray[Math.abs(foundIndex)].exitDate = Date();
-
-  // console.log(checkedOut)
-
-  location.reload()
-  console.log("checked out")
-
-  renderCars()
   $(".loading").hide();
 })
