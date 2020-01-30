@@ -217,7 +217,7 @@ function guid() {
 // if (el) {
 //     el.addEventListener('submit', saveMemberInfo);
 // }
-$('#checkInBtn').click(async function (event) {
+$('.checkInBtn').click(async function (event) {
   // event.preventDefault();
   console.log("Adding car to the blockchain")
 
