@@ -208,9 +208,8 @@ $('.modal-body').on('click', '#checkInBtn', async function () {
 
   const promise = await contractCall("addCar", [nameOfCar, owner_name, image, Lisence_no], 0)
  if(promise !== undefined){
- then(
+
    
-    async function(){
 
       // if(promise == undefined){
       //   console.log("reverting request")
@@ -238,7 +237,7 @@ $('.modal-body').on('click', '#checkInBtn', async function () {
   
     $(".loading").hide();
   
-  }).catch(err => console.log(err) );
+
 }else{
   console.log("Reverting request, Request failed")
   $(".loading").hide();
