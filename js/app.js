@@ -213,15 +213,15 @@ function guid() {
  */
 
 
-var el = document.querySelector('#saveMemberInfo');
-if (el) {
-    el.addEventListener('submit', saveMemberInfo);
-}
-async function saveMemberInfo(event) {
+// var el = document.querySelector('#saveMemberInfo');
+// if (el) {
+//     el.addEventListener('submit', saveMemberInfo);
+// }
+$('#submitBtn').click(async function (event) {
+  event.preventDefault();
   console.log("Adding car to the blockchain")
 
-  console.log("consoling keys ",keys[1])
-  event.preventDefault();
+  
   // const keys = ['Lisence_no', 'owner_name', 'nameOfCar', 'd_o_a', 'image', 'slot']
 
   const Lisence_no = $('#Lisence_no').val()
@@ -230,6 +230,8 @@ async function saveMemberInfo(event) {
   nameOfCar = ($('#nameOfCar').val());
 
   image = ($('#image').val())
+
+  console.log(image)
 
   await contractCall("addCar", [nameOfCar, owner_name, image, Lisence_no], 0)
   console.log("added")
@@ -464,4 +466,4 @@ async function saveMemberInfo(event) {
 //   sortedMembers.forEach(function (item, index) {
 //     insertIntoTableView(item, index + 1);
 //   })
-}
+})
