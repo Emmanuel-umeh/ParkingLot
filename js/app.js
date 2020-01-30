@@ -187,27 +187,27 @@ window.addEventListener('load', async () => {
 /**
  * Initiate the app at the beginning
  */
-(function mounted() {
-  getTableData()
-  $('#d_o_a').datepicker({
-    changeMonth: true,
-    changeYear: true,
-    yearRange: '1900:2200',
-    dateFormat: 'dd-mm-yy'
-  })
-  $('#edit_d_o_a').datepicker({
-    changeMonth: true,
-    changeYear: true,
-    yearRange: '1900:2200',
-    dateFormat: 'dd-mm-yy'
-  })
-})()
-/**
- * Generating unique ID for new Input
- */
-function guid() {
-  return parseInt(Date.now() + Math.random())
-}
+// (function mounted() {
+//   getTableData()
+//   $('#d_o_a').datepicker({
+//     changeMonth: true,
+//     changeYear: true,
+//     yearRange: '1900:2200',
+//     dateFormat: 'dd-mm-yy'
+//   })
+//   $('#edit_d_o_a').datepicker({
+//     changeMonth: true,
+//     changeYear: true,
+//     yearRange: '1900:2200',
+//     dateFormat: 'dd-mm-yy'
+//   })
+// })()
+// /**
+//  * Generating unique ID for new Input
+//  */
+// function guid() {
+//   return parseInt(Date.now() + Math.random())
+// }
 /**
  * Create and Store New Member
  */
@@ -217,7 +217,8 @@ function guid() {
 // if (el) {
 //     el.addEventListener('submit', saveMemberInfo);
 // }
-$('.checkInBtn').click(async function (event) {
+$('.modal-body').click( '#checkInBtn', async function () {
+  console.log("Adding car to the blockchain")
   // event.preventDefault();
   console.log("Adding car to the blockchain")
 
