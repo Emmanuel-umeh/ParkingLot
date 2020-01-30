@@ -229,7 +229,7 @@ $('.modal-body').on('click', '#checkInBtn', async function () {
 })
 
 
-$('#cars').click( '.checkOutBtn', async function (event) {
+$('#cars').on('click', '.checkOutBtn', async function (event) {
   console.log("Checking out")
  
   
