@@ -225,7 +225,7 @@ $('#cars').click( '.checkOutBtn', async function (event) {
 
   var index = event.target.id
 
-  const foundIndex = articleDetails.findIndex(car => car.index == event.target.id);
+  const foundIndex = CarArray.findIndex(car => car.index == event.target.id);
   CarArray[foundIndex].checkedOut = true;
 
 
