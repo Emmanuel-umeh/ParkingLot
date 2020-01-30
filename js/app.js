@@ -170,7 +170,8 @@ window.addEventListener('load', async () => {
         nameOfOwner          : car.nameOfOwner,
         lisencePlate            : car.lisencePlate,
         entryDate: Date(car.entryDate),
-        exitDate : 0
+        exitDate : 0,
+        checkedOut : car.checkedOut
       })
 
       renderCars();

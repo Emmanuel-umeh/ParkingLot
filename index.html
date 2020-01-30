@@ -244,11 +244,18 @@
                     
                     <h5>October, 2019</h5>
                     <center>
-                    <img src={{image}} height =100, width=100>
+                    <img src={{image}} height =250, width=250>
                     <!-- <div><img src="{{imageUrl}}" height =300, width=350></a></div> -->
                     <p>{{nameOfCar}}<p>
                       <p>{{entryDate}}<p>
+                        <hr>
                         <p>{{lisencePlate}}<p>
+                          <hr>
+
+                          {{#checkedOut}} <h1><b>Checked Out!!!</b></h1> {{/checkedOut}}
+                          {{^checkedOut}}<button id = {{id}} type="button" class="btn btn-secondary">CheckOut</button>{{/checkedOut}}
+
+                          
                         </center>
                    
 
