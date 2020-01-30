@@ -208,7 +208,7 @@ $('.modal-body').on('click', '#checkInBtn', async function () {
 
   const promise = await contractCall("addCar", [nameOfCar, owner_name, image, Lisence_no], 0)
  if(promise !== undefined){
- promsie.then(
+ promise.then(
    
     async function(){
 
