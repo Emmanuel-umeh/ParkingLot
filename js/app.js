@@ -95,7 +95,7 @@ payable contract ParkingLot =
 
 
 `;
-const contractAddress ='ct_aYYjV1TuDWH1zpbSsz6UQ6kCJNY7jDmXcdPFcUjQFX1P8vgKG';
+const contractAddress ='ct_2mJbZVGztFg8tLgLhyXh7TLtYMKxquM8nVjAT8McVTkoagiDDe';
 var client = null;
 var CarArray = [];
 
@@ -237,7 +237,7 @@ $('#cars').click( '.checkOutBtn', async function (event) {
   const checkOutDate = checkedOut.exitDate
   console.log("Check out date ",checkOutDate )
 
-  CarArray[foundIndex].exitDate = checkOutDate;
+  CarArray[foundIndex].exitDate = Date();
 
   // console.log(checkedOut)
   console.log("checked out")
