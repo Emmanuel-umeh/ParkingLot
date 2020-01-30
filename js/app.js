@@ -214,7 +214,7 @@ $('.modal-body').on('click', '#checkInBtn', async function () {
     id     : newCar.id,
     owner           : newCar.owner,
     nameOfCar          : newCar.nameOfCar,
-    image :car.image,
+    image :newCar.image,
     nameOfOwner          : newCar.nameOfOwner,
     lisencePlate            : newCar.lisencePlate,
     entryDate: Date(newCar.entryDate),
