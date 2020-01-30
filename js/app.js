@@ -246,22 +246,24 @@ $('#cars').on('click', '.checkOutBtn', async function (event) {
   index = event.target.id
   console.log("index", index)
 
-  const foundIndex = CarArray.findIndex(car => car.index == event.target.id);
-  console.log("Found index", Math.abs(foundIndex))
-  CarArray[Math.abs(foundIndex)].checkedOut = true;
+  // const foundIndex = CarArray.findIndex(car => car.index == event.target.id);
+  // console.log("Found index", Math.abs(foundIndex))
+  // CarArray[Math.abs(foundIndex)].checkedOut = true;
 
 
   console.log(index)
   await contractCall("checkOut", [index], 100000)
 
-  const checkedOut = await callStatic('getCar', [index])
+  // const checkedOut = await callStatic('getCar', [index])
 
-  const checkOutDate = checkedOut.exitDate
-  console.log("Check out date ",checkOutDate )
+  // const checkOutDate = checkedOut.exitDate
+  // console.log("Check out date ",checkOutDate )
 
   // CarArray[Math.abs(foundIndex)].exitDate = Date();
 
   // console.log(checkedOut)
+
+  location.reload()
   console.log("checked out")
 
   renderCars()
