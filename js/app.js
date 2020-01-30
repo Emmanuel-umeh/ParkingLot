@@ -222,9 +222,12 @@ async function saveMemberInfo(event) {
 
   console.log(keys[1])
   event.preventDefault();
-  const keys = ['Lisence_no', 'owner_name', 'nameOfCar', 'd_o_a', 'slot']
+  const keys = ['Lisence_no', 'owner_name', 'nameOfCar', 'd_o_a', 'image', 'slot']
   
-  await contractCall("addCar", [keys[2],keys[1],keys[0]], 0)
+  await contractCall("addCar", [keys[2],keys[1],keys[4],keys[0]], 0)
+  console.log("added")
+
+  renderCars()
   const obj = {}
   keys.forEach((item, index) => {
     const result = document.getElementById(item).value
