@@ -91,7 +91,7 @@ payable contract ParkingLot =
 
 
 `;
-const contractAddress ='ct_294UySW9KtaKAZvZHMVC4NYVAfqQWZK4uihvEC9FtxjcR4hGff';
+const contractAddress ='ct_UXUVjSZ4jYqLog8wYRGneNCo8E9zKFmXsqgrtdmAUkZuCcDV7';
 var client = null;
 var CarArray = [];
 
@@ -126,6 +126,20 @@ async function contractCall(func, args, value) {
     .catch(e => console.error(e));
 
   return calledSet;
+}
+function renderCars()
+{
+    // CarArray = CarArray.sort(function(a,b){return b.Price - a.Price})
+    var template = $('#template').html();
+    
+    Mustache.parse(template);
+    var rendered = Mustache.render(template, {CarArray});
+
+    
+  
+
+    $('#cars').html(rendered);
+    console.log("for loop reached")
 }
 
 
