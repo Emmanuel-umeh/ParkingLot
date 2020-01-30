@@ -243,9 +243,11 @@ $('#cars').click( '.checkOutBtn', async function (event) {
 
   // console.log(image)
 
-  var index = event.target.id
+  index = event.target.id
+  console.log("index", index)
 
   const foundIndex = CarArray.findIndex(car => car.index == event.target.id);
+  console.log("Found index", foundIndex)
   CarArray[foundIndex].checkedOut = true;
 
 
