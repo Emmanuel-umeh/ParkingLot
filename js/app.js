@@ -199,9 +199,29 @@ $('.modal-body').on('click', '#checkInBtn', async function () {
 
   image = ($('#image').val())
 
+  
+
+
+ 
   console.log(image)
 
   await contractCall("addCar", [nameOfCar, owner_name, image, Lisence_no], 0)
+
+  const carId = await callStatic('getTotalCars', [])
+
+  const newCar = await callStatic('getCar', [carId])
+  CarArray.push({
+    id     : newCar.id,
+    owner           : newCar.owner,
+    nameOfCar          : newCar.nameOfCar,
+    image :car.image,
+    nameOfOwner          : newCar.nameOfOwner,
+    lisencePlate            : newCar.lisencePlate,
+    entryDate: Date(newCar.entryDate),
+    exitDate : 0,
+    checkedOut : newCar.checkedOut
+  })
+
   console.log("added")
 
   renderCars()
