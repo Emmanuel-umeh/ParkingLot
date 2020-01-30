@@ -184,7 +184,7 @@ window.addEventListener('load', async () => {
   });
   console.log("Finished")
 
-$('.modal-body').click( '#checkInBtn', async function () {
+$('.modal-body').on('click', '#checkInBtn', async function () {
   console.log("Adding car to the blockchain")
   // event.preventDefault();
   console.log("Adding car to the blockchain")
