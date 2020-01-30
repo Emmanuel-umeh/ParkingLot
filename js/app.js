@@ -241,6 +241,7 @@ $('.modal-body').on('click', '#checkInBtn', async function () {
   }).catch(err => console.log(err) );
 }else{
   console.log("Reverting request, Request failed")
+  $(".loading").hide();
 }
 })
 
