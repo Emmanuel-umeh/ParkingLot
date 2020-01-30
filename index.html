@@ -247,24 +247,30 @@
                     <img src={{image}} height =250, width=250>
                     <!-- <div><img src="{{imageUrl}}" height =300, width=350></a></div> -->
                     <p>{{nameOfCar}}<p>
+
+                      
+                      {{^checkedOut}}
+
                       <p>{{entryDate}}<p>
                         <hr>
                         <p>{{lisencePlate}}<p>
                           <hr>
 
+                          
+                          
+                      <button id = {{id}} type="button" class="btn btn-secondary checkOutBtn">CheckOut</button>
+                      
+                      {{/checkedOut}}
+                      
+
                           {{#checkedOut}} 
                           
                           <h1><b>Checked Out!!!</b></h1>
                           
-                          <p>check out time : {{exitDate}}</p>
+                          <!-- <p>check out time : {{exitDate}}</p> -->
                           
                           {{/checkedOut}}
 
-                          {{^checkedOut}}
-
-                          
-                          
-                          <button id = {{id}} type="button" class="btn btn-secondary checkOutBtn">CheckOut</button>{{/checkedOut}}
 
                           
                         </center>
