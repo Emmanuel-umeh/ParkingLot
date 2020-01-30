@@ -259,7 +259,7 @@ $('#cars').on('click', '.checkOutBtn', async function (event) {
   const checkOutDate = checkedOut.exitDate
   console.log("Check out date ",checkOutDate )
 
-  CarArray[Math.abs(foundIndex)].exitDate = Date();
+  // CarArray[Math.abs(foundIndex)].exitDate = Date();
 
   // console.log(checkedOut)
   console.log("checked out")
