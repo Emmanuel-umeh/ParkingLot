@@ -14,10 +14,17 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.min.css">
   <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/loader.css">
   <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:700,900&display=swap" rel="stylesheet">
 
 </head>
 <body>
+
+  <div class="loading">
+    <div class='uil-ring-css' style='transform:scale(0.79);'>
+      <div></div>
+    </div>
+  </div>
 
   <div class="container">
     <div class="page-header-extended">
@@ -246,7 +253,7 @@
                     <center>
                     <img src={{image}} height =250, width=250>
                     <!-- <div><img src="{{imageUrl}}" height =300, width=350></a></div> -->
-                    <p>{{nameOfCar}}<p>
+                    <h3>{{nameOfCar}}<h3>
 
                       
                       {{^checkedOut}}

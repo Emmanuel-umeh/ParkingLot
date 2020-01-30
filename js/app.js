@@ -148,7 +148,7 @@ function renderCars()
 
 
 window.addEventListener('load', async () => {
-  //   $("#loader").show();
+    $(".loading").show();
   
     client = await Ae.Aepp();
   
@@ -179,12 +179,13 @@ window.addEventListener('load', async () => {
   
     
     
-  
+    $(".loading").hide();
   //   $("#loader").hide();
   });
   console.log("Finished")
 
 $('.modal-body').on('click', '#checkInBtn', async function () {
+  $(".loading").show();
   console.log("Adding car to the blockchain")
   // event.preventDefault();
   console.log("Adding car to the blockchain")
@@ -226,10 +227,12 @@ $('.modal-body').on('click', '#checkInBtn', async function () {
 
   renderCars()
 
+  $(".loading").hide();
 })
 
 
 $('#cars').on('click', '.checkOutBtn', async function (event) {
+  $(".loading").show();
   console.log("Checking out")
  
   
@@ -267,5 +270,5 @@ $('#cars').on('click', '.checkOutBtn', async function (event) {
   console.log("checked out")
 
   renderCars()
-
+  $(".loading").hide();
 })
