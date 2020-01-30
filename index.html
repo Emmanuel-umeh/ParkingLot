@@ -252,8 +252,19 @@
                         <p>{{lisencePlate}}<p>
                           <hr>
 
-                          {{#checkedOut}} <h1><b>Checked Out!!!</b></h1> {{/checkedOut}}
-                          {{^checkedOut}}<button id = {{id}} type="button" class="btn btn-secondary">CheckOut</button>{{/checkedOut}}
+                          {{#checkedOut}} 
+                          
+                          <h1><b>Checked Out!!!</b></h1>
+                          
+                          <p>check out time : {{exitDate}}</p>
+                          
+                          {{/checkedOut}}
+
+                          {{^checkedOut}}
+
+                          
+                          
+                          <button id = {{id}} type="button" class="btn btn-secondary checkOutBtn">CheckOut</button>{{/checkedOut}}
 
                           
                         </center>
@@ -264,7 +275,8 @@
                   </div>
                   
                 </div>
-                
+                <br>
+                <br>
                 {{/CarArray}}
 
 </script>
