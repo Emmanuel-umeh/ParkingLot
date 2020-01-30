@@ -223,9 +223,10 @@ $('#cars').click( '.checkOutBtn', async function (event) {
 
   // console.log(image)
 
-  index = event.target.id
+  var index = event.target.id
 
-  await contractCall("checkOut", [index], 0)
+  console.log(index)
+  await contractCall("checkOut", [index], 100000)
 
   const checkedOut = await callStatic('getCar', [index])
 
