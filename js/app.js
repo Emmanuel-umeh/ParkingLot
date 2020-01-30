@@ -91,7 +91,7 @@ payable contract ParkingLot =
 
 
 `;
-const contractAddress ='ct_UXUVjSZ4jYqLog8wYRGneNCo8E9zKFmXsqgrtdmAUkZuCcDV7';
+const contractAddress ='ct_aYYjV1TuDWH1zpbSsz6UQ6kCJNY7jDmXcdPFcUjQFX1P8vgKG';
 var client = null;
 var CarArray = [];
 
@@ -162,6 +162,7 @@ window.addEventListener('load', async () => {
         id     : car.id,
         owner           : car.owner,
         nameOfCar          : car.nameOfCar,
+        image :car.image,
         nameOfOwner          : car.nameOfOwner,
         lisencePlate            : car.lisencePlate,
         entryDate: Date(car.entryDate),
