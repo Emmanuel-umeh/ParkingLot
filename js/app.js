@@ -95,7 +95,7 @@ payable contract ParkingLot =
 
 
 `;
-const contractAddress ='ct_2mJbZVGztFg8tLgLhyXh7TLtYMKxquM8nVjAT8McVTkoagiDDe';
+const contractAddress ='ct_HpyTW3d3QEcWPjX9REmfhzFcUH7DmroVLmee3d9gZSv9oCVEP';
 var client = null;
 var CarArray = [];
 
