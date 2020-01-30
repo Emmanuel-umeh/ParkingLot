@@ -43,7 +43,7 @@
             <div class="modal-body">
               <form id="saveMemberInfo">
                 <div class="form-group">
-                  <label for="reg_no">Registration no
+                  <label for="reg_no">Lisence no
                     <span class="required-field">*</span>
                     
                   </label>
@@ -61,17 +61,17 @@
                   </label>
                   <input type="text" class="form-control" placeholder="Enter name of car" id="nameOfCar" required />
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="d_o_a">Date of allocation
                     <span class="required-field">*</span>
                   </label>
                   <input type="text" class="form-control" placeholder="Enter date of entry" id="d_o_a" required onkeypress="return false;" />
-                </div>
+                </div> -->
                 <div class="form-group">
-                  <label for="slot">Slot number
+                  <label for="slot">image URL
                     <span class="required-field">*</span>
                   </label>
-                  <input type="number" class="form-control" placeholder="Enter slot number" id="slot" required min="1" max="10" maxlength="2">
+                  <input type="url" class="form-control" placeholder="Enter image url" id="image" required min="1"  maxlength="100">
                 </div>
                 <div class="modal-footer-extended">
                   <button type="submit" class="btn btn-primary">Create</button>
@@ -131,7 +131,7 @@
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <label for="show_reg_no">Registration no</label>
+              <label for="show_reg_no">Liscence no</label>
               <input type="text" class="form-control" id="show_reg_no" value="" disabled>
             </div>
             <div class="form-group">
@@ -139,16 +139,16 @@
               <input type="text" class="form-control" id="show_owner_name" value="" disabled>
             </div>
             <div class="form-group">
-              <label for="show_email">Email</label>
-              <input type="email" class="form-control" id="show_email" value="" disabled>
+              <label for="show_email">image</label>
+              <input type="url" class="form-control" id="show_image" value="" disabled>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="show_d_o_a">Date of allocation</label>
               <input type="text" class="form-control" id="show_d_o_a" value="" disabled>
-            </div>
+            </div> -->
             <div class="form-group">
-              <label for="show_slot">Slot number</label>
-              <input type="number" class="form-control" id="show_slot" value="" disabled>
+              <label for="show_slot">Car Brand</label>
+              <input type="number" class="form-control" id="carBrand" value="" disabled>
             </div>
             <div class="modal-footer-extended">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -240,9 +240,9 @@
     <div class="row">
                 <div>
                   <div class="card">
+                    <center>
                       <div class = "header"><h2>{{nameOfOwner}}</h2></div>
-                    
-                    <h5>October, 2019</h5>
+                    </center>
                     <center>
                     <img src={{image}} height =250, width=250>
                     <!-- <div><img src="{{imageUrl}}" height =300, width=350></a></div> -->
