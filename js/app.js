@@ -247,8 +247,8 @@ $('#cars').click( '.checkOutBtn', async function (event) {
   console.log("index", index)
 
   const foundIndex = CarArray.findIndex(car => car.index == event.target.id);
-  console.log("Found index", foundIndex)
-  CarArray[foundIndex].checkedOut = true;
+  console.log("Found index", Math.abs(foundIndex))
+  CarArray[Math.abs(foundIndex)].checkedOut = true;
 
 
   console.log(index)
@@ -259,7 +259,7 @@ $('#cars').click( '.checkOutBtn', async function (event) {
   const checkOutDate = checkedOut.exitDate
   console.log("Check out date ",checkOutDate )
 
-  CarArray[foundIndex].exitDate = Date();
+  CarArray[Math.abs(foundIndex)].exitDate = Date();
 
   // console.log(checkedOut)
   console.log("checked out")
