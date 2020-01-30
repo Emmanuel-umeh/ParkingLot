@@ -168,7 +168,7 @@ window.addEventListener('load', async () => {
         exitDate : 0
       })
 
-      // renderCars();
+      renderCars();
     }
   
     
