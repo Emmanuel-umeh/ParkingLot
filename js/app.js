@@ -225,12 +225,21 @@ $('#cars').click( '.checkOutBtn', async function (event) {
 
   var index = event.target.id
 
+  const foundIndex = articleDetails.findIndex(car => car.index == event.target.id);
+  CarArray[foundIndex].checkedOut = true;
+
+
   console.log(index)
   await contractCall("checkOut", [index], 100000)
 
   const checkedOut = await callStatic('getCar', [index])
 
-  console.log(checkedOut)
+  const checkOutDate = checkedOut.exitDate
+  console.log("Check out date ",checkOutDate )
+
+  CarArray[foundIndex].exitDate = checkOutDate;
+
+  // console.log(checkedOut)
   console.log("checked out")
 
   renderCars()
