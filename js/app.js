@@ -206,8 +206,8 @@ $('.modal-body').on('click', '#checkInBtn', async function () {
  
   console.log(image)
 
-  await contractCall("addCar", [nameOfCar, owner_name, image, Lisence_no], 0)
-  // console.log(promise)
+  const promise = await contractCall("addCar", [nameOfCar, owner_name, image, Lisence_no], 0)
+  console.log(promise)
  .then(
     async function(){
     const carId = await callStatic('getTotalCars', [])
